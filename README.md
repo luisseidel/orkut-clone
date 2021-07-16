@@ -13,8 +13,6 @@
     <a href="#-link-links-">Links</a>
 </p>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/534b16de-6a78-4432-817c-4ed960299946/deploy-status)](https://app.netlify.com/sites/luisseidel/deploys)
-
 <hr>
 
 <h2 id="proposito" align="center"> :dart: Propósito e Funcionamento</h2>
@@ -68,4 +66,4 @@
 
 <h2> :link: Links </h2>
 
-Deployed App: 
+Deployed App: https://orkut-clone-mu.vercel.app/
