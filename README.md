@@ -25,8 +25,6 @@
 
 <hr>
 
-<hr>
-
 <h2> :wrench: Tecnologias Utilizadas </h2>
 
 <ul>
@@ -35,6 +33,7 @@
     <li>React</li>
     <li>Styled Components</li>
     <li>Grid Templates</li>
+    <li>Semantic Commits</li>
     <li>VSCode</li>
 </ul>
 
