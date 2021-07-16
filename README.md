@@ -33,6 +33,8 @@
     <li>HTML 5</li>
     <li>SASS</li>
     <li>React</li>
+    <li>Styled Components</li>
+    <li>Grid Templates</li>
     <li>VSCode</li>
 </ul>
 
