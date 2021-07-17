@@ -25,6 +25,14 @@ const GlobalStyle = createGlobalStyle`
         display: block;
     }
 
+    button, a {
+        cursor: pointer;
+        &:hover {
+            filter: brightness(1.2);
+            transition: filter ease-in-out 0.3s;
+        }
+    }
+
     $(AlurakutStyles)
 `
 
