@@ -18,7 +18,10 @@
 <h2 id="proposito" align="center"> :dart: Propósito e Funcionamento</h2>
 
 <p>
-    Este projeto é um clone do orkut.
+    Este projeto é um clone do orkut. 
+    Nele é possível você ter seu próprio perfil, adicionar pessoas do github,
+    e adicionar comunidades. Caso você não forneça nenhum dado, será adicionada
+    uma pessoa sem nome porém com uma foto aleatória do site www.picsum.photos
 </p>
 
 <hr>
@@ -38,10 +41,45 @@
 <h2> :checkered_flag: Instalação </h2>
 
 <details>
-    <summary>Windows / Linux</summary>
-    1. Download this repo, and open it with VSCode.
-    2. Install Live Server and Live Sass Compiler
-    3. When done, just click Go Live and Watch Sass.
+<summary>Windows</summary>
+
+    1. Download and install Chocolatey:
+    Get-ExecutionPolicy
+    Set-ExecutionPolicy AllSigned
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    
+    2. Install nodejs
+    choco install -y --force nodejs
+    
+    3. Install Yarn:
+    npm install --global yarn
+    
+    3. Download this project as .zip and navigate to the folder where yout extract it
+    cd /path/to/the/project
+    
+    4. Run:
+    yarn start
+
+</details>
+
+
+<details>
+<summary>Linux</summary>
+
+    1. Install nodejs
+    sudo apt-get install curl python-software-properties software-properties-common &&
+    curl -sL https://deb.nodesource.com/setup_16.x | sudo bash - &&
+    sudo apt-get install nodejs 
+    
+    2. Install Yarn:
+    sudo npm install yarn -g
+    
+    3. Download this project as .zip and navigate to the folder where yout extract it
+    cd /path/to/the/project
+    
+    4. Run:
+    yarn start
+
 </details>
 
 

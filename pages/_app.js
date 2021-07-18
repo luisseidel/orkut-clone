@@ -32,6 +32,36 @@ const GlobalStyle = createGlobalStyle`
             transition: filter ease-in-out 0.3s;
         }
     }
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid transparent;
+        background-color: transparent;
+        
+        button {
+            margin-right: 8px;
+        }
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+        animation: fadeEffect 1s; 
+    }
+
+    .tablinks.active {
+        background-color: #333;
+        color: white;
+    }
+
+    /* Go from zero to full opacity */
+    @keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
 
     $(AlurakutStyles)
 `
