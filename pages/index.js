@@ -1,13 +1,11 @@
-import styled from 'styled-components';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutMenu';
 import { React, useState, useEffect } from 'react';
-import { ProfileUser } from '../src/components/ProfileUser';
-import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
-import {AlurakutProfileSidebarMenuDefault} from '../src/lib/AlurakutMenu';
+import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelationsBoxWrapper';
+import { AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutMenu';
 
-function ProfileRelationsBox(props) {
+function GitFollowers(props) {
     return (
         <ProfileRelationsBoxWrapper as="aside">
             <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
@@ -17,6 +15,52 @@ function ProfileRelationsBox(props) {
                 props.items.map((p) => {
                     return (
                         <li key={p.id}>
+                            <a href={`/users/${p.title}`}>
+                                <img src={p.avatar_url} />
+                                <span>{p.login}</span>
+                            </a>
+                        </li>
+                    )
+                })
+            }
+            </ul>
+        </ProfileRelationsBoxWrapper>
+    )
+}
+
+function Comunidades(props) {
+    return (
+        <ProfileRelationsBoxWrapper as="aside">
+            <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
+
+            <ul>
+            {
+                props.items.map((p) => {
+                    return (
+                        <li key={p.id}>
+                            <a href={`/comunities/${p.id}`}>
+                                <img src={p.image} />
+                                <span>{p.title}</span>
+                            </a>
+                        </li>
+                    )
+                })
+            }
+            </ul>
+        </ProfileRelationsBoxWrapper>
+    )
+}
+
+function Friends(props) {
+    return (
+        <ProfileRelationsBoxWrapper as="aside">
+            <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
+
+            <ul>
+            {
+                props.items.map((p) => {
+                    return (
+                        <li key={p.title}>
                             <a href={`/users/${p.title}`}>
                                 <img src={p.image} />
                                 <span>{p.title}</span>
@@ -32,56 +76,31 @@ function ProfileRelationsBox(props) {
 
 export default function Home() {
 
-    function getGitFollowers(gitUser) {
-        var link = `https://api.github.com/users/${gitUser}/followers`;
-
-        fetch(link)
-        .then((resposta) => {
-            if (resposta.ok) {
-                return resposta.json();
-            }
-
-            throw new Error(`Aconteceu algum problema :( - ${resposta.status}`)
-        })
-        .then((respostaConvertida) => {
-            setSeguidores(respostaConvertida);
-            console.log(respostaConvertida);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
-
     function handleCriarComunidade(event) {
         event.preventDefault();
         
         const dadosForm = new FormData(event.target);
 
         const comunidade = {
-            id: new Date().toISOString(),
             title: dadosForm.get('title'),
-            image: (dadosForm.get('title')) 
-            ? `https://github.com/${dadosForm.get('title')}.png` 
-            : `https://picsum.photos/200/300?${Math.trunc(Math.random()*10000)}`,
+            image: (dadosForm.get('image') ? dadosForm.get('image') : `https://picsum.photos/200/300?${Math.trunc(Math.random()*10000)}`),
+            creatorSlug: githubUser,
         }
 
-        setComunidades([...comunidades, comunidade]);
-    }
+        console.log('Comunidade: ' + comunidade);
 
-    function handleCriarPessoas(event) {
-        event.preventDefault();
-        
-        const dadosForm = new FormData(event.target);
+        fetch('/api/comunidades', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ comunidade })
+        })
+        .then(async (response) => {
+            const dados = await response.json();
+            console.log(dados);
+        })
 
-        const pessoa = {
-            id: new Date().toISOString(),
-            title: dadosForm.get('title'),
-            image: (dadosForm.get('title')) 
-            ? `https://github.com/${dadosForm.get('title')}.png` 
-            : `https://picsum.photos/200/300?${Math.trunc(Math.random()*10000)}`,
-        }
-
-        setPessoas([...pessoas, pessoa]);
     }
 
     function openTab(evt, tabName) {
@@ -109,14 +128,61 @@ export default function Home() {
         }
     }
 
+    function getGitFollowers(gitUser) {
+        var link = `https://api.github.com/users/${gitUser}/followers`;
+
+        fetch(link)
+        .then((resposta) => {
+            if (resposta.ok) {
+                return resposta.json();
+            }
+
+            throw new Error(`Aconteceu algum problema :( - ${resposta.status}`)
+        })
+        .then((respostaConvertida) => {
+            setSeguidores(respostaConvertida);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+    function getComunidades() {
+        fetch('https://graphql.datocms.com/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'e9fffaa3fe01b1f24edac8224bcde6',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                "query": 
+                `query {
+                    allCommunities {
+                        title
+                        id
+                        image
+                        creatorSlug
+                    }
+                }`
+            })
+        })
+        .then((response) => response.json())
+        .then((respostaCompleta) => {
+            const comunidadesDato = respostaCompleta.data.allCommunities;
+            setComunidades(comunidadesDato);
+        })
+    }
+
+
     const githubUser = 'luisseidel';
-    const [pessoas, setPessoas] = useState([]);
     const [comunidades, setComunidades] = useState([]);
     const [seguidores, setSeguidores] = useState([]);
     
     useEffect(() => {
-        getGitFollowers('luisseidel')
-    }, [seguidores]);
+        getGitFollowers('luisseidel');
+        getComunidades();
+    }, []);
 
     return (
         <>
@@ -174,7 +240,7 @@ export default function Home() {
                                 <div>
                                     <input 
                                         type="text"
-                                        name="image" 
+                                        name="image_url" 
                                         placeholder="Coloque uma URL de imagem para a capa"
                                         aria-label="Coloque uma URL de imagem para a capa"
                                     />
@@ -203,9 +269,8 @@ export default function Home() {
                 </div>
 
                 <div className="profileRelationsArea" style={{ gridArea:"profileRelationsArea" }}>
-                    <ProfileRelationsBox title="Seguidores" items={seguidores} />
-                    <ProfileRelationsBox title="Amigos" items={pessoas} />
-                    <ProfileRelationsBox title="Comunidades" items={comunidades} />
+                    <GitFollowers title="Seguidores" items={seguidores} />
+                    <Comunidades title="Comunidades" items={comunidades} />
                 </div>
             </MainGrid>
         </>

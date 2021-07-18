@@ -18,10 +18,13 @@
 <h2 id="proposito" align="center"> :dart: Propósito e Funcionamento</h2>
 
 <p>
-    Este projeto é um clone do orkut. 
-    Nele é possível você ter seu próprio perfil, adicionar pessoas do github,
-    e adicionar comunidades. Caso você não forneça nenhum dado, será adicionada
-    uma pessoa sem nome porém com uma foto aleatória do site www.picsum.photos
+    Este projeto é um clone do orkut.
+    Nesse clone é possível adicionar seu perfil do github, que consumirá a api do mesmo,
+    trazendo os dados dos seguidores que você possui.
+    É possível, também criar amigos e comunidades. Essa função se comunica com o Dato CMS,
+    que faz a gestão do conteúdo das páginas. Quando cadastramos uma pessoa ou comunidade,
+    ele envia os dados para lá, por meio de uma api criada com esse fim. Da mesma maneira,
+    ele se comunica com o sistema de CMS para trazer os dados cadastrados de lá.
 </p>
 
 <hr>
@@ -32,6 +35,8 @@
     <li>HTML 5</li>
     <li>SASS</li>
     <li>React</li>
+    <li>GraphQL</li>
+    <li>Integração DatoCMS</li>
     <li>Styled Components</li>
     <li>Grid Templates</li>
     <li>Semantic Commits</li>
