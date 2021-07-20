@@ -84,21 +84,20 @@ export default function Home() {
         const comunidade = {
             title: dadosForm.get('title'),
             image: (dadosForm.get('image') ? dadosForm.get('image') : `https://picsum.photos/200/300?${Math.trunc(Math.random()*10000)}`),
-            creatorSlug: githubUser,
+            slug: githubUser,
         }
-
-        console.log('Comunidade: ' + comunidade);
 
         fetch('/api/comunidades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ comunidade })
+            body: JSON.stringify(comunidade)
         })
         .then(async (response) => {
             const dados = await response.json();
-            console.log(dados);
+            const comu = dados.registroCriado;
+            setComunidades([...comunidades, comu]);
         })
 
     }
@@ -159,10 +158,10 @@ export default function Home() {
                 "query": 
                 `query {
                     allCommunities {
-                        title
                         id
+                        title
                         image
-                        creatorSlug
+                        slug
                     }
                 }`
             })
@@ -240,7 +239,7 @@ export default function Home() {
                                 <div>
                                     <input 
                                         type="text"
-                                        name="image_url" 
+                                        name="image" 
                                         placeholder="Coloque uma URL de imagem para a capa"
                                         aria-label="Coloque uma URL de imagem para a capa"
                                     />
