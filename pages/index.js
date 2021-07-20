@@ -51,29 +51,6 @@ function Comunidades(props) {
     )
 }
 
-function Friends(props) {
-    return (
-        <ProfileRelationsBoxWrapper as="aside">
-            <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
-
-            <ul>
-            {
-                props.items.map((p) => {
-                    return (
-                        <li key={p.title}>
-                            <a href={`/users/${p.title}`}>
-                                <img src={p.image} />
-                                <span>{p.title}</span>
-                            </a>
-                        </li>
-                    )
-                })
-            }
-            </ul>
-        </ProfileRelationsBoxWrapper>
-    )
-}
-
 export default function Home() {
 
     function handleCriarComunidade(event) {
@@ -250,7 +227,7 @@ export default function Home() {
                         </div>
                         
                         <div id="pessoas" className="tabcontent">
-                            <h3 className="subTitle">Adicionar Pessoa</h3>
+                            <h3 className="subTitle">Adicionar Amigo</h3>
                             <form action="" onSubmit={(e) => handleCriarPessoas(e)}>
                                 <div>
                                     <input 
@@ -268,7 +245,7 @@ export default function Home() {
                 </div>
 
                 <div className="profileRelationsArea" style={{ gridArea:"profileRelationsArea" }}>
-                    <GitFollowers title="Seguidores" items={seguidores} />
+                    <GitFollowers title="Seguidores Github" items={seguidores} />
                     <Comunidades title="Comunidades" items={comunidades} />
                 </div>
             </MainGrid>
