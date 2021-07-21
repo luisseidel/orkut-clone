@@ -1,4 +1,6 @@
 import MainGrid from '../src/components/MainGrid';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import Box from '../src/components/Box';
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutMenu';
 import { React, useState, useEffect } from 'react';
@@ -51,7 +53,7 @@ function Comunidades(props) {
     )
 }
 
-export default function Home() {
+export default function Home(props) {
 
     function handleCriarComunidade(event) {
         event.preventDefault();
@@ -104,8 +106,8 @@ export default function Home() {
         }
     }
 
-    function getGitFollowers(gitUser) {
-        var link = `https://api.github.com/users/${gitUser}/followers`;
+    function getGitFollowers(githubUser) {
+        var link = `https://api.github.com/users/${githubUser}/followers`;
 
         fetch(link)
         .then((resposta) => {
@@ -151,12 +153,12 @@ export default function Home() {
     }
 
 
-    const githubUser = 'luisseidel';
+    const githubUser = props.githubUser;
     const [comunidades, setComunidades] = useState([]);
     const [seguidores, setSeguidores] = useState([]);
     
     useEffect(() => {
-        getGitFollowers('luisseidel');
+        getGitFollowers(githubUser);
         getComunidades();
     }, []);
 
@@ -251,4 +253,31 @@ export default function Home() {
             </MainGrid>
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const token = nookies.get(context).USER_TOKEN;
+
+    const { isAuthenticated} = await fetch('https://alurakut.vercel.app/api/auth', {
+        headers: {
+            Authorization: token
+        }
+    }).then((resp) => resp.json());
+
+    console.log('Authenticated: ' + isAuthenticated);
+
+    if (!isAuthenticated) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
+
+    const { githubUser } = jwt.decode(token);
+
+    return {
+        props: { githubUser },
+    }
 }

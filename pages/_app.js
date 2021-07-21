@@ -19,6 +19,109 @@ const GlobalStyle = createGlobalStyle`
         flex-direction: column;
     }
 
+    .login {
+        display: flex; 
+        flex: 1;
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center;
+
+        .loginScreen {
+            display: flex;
+            flex: 1;
+            align-items: center; 
+            justify-content: center;
+
+            height: 100vh;
+            width: 100%;
+            margin: 50px;
+            
+            .logoArea {
+                height: 80%;
+                margin: 0 12px;
+                padding: 120px 50px;
+                background-color: #f3f3f3;
+                border-radius: 6px;
+
+                flex: 3;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+
+                img {
+                    max-width: 50%;
+                    margin: 24px;
+                }
+
+                strong {
+                    color: #ED2590;
+                }
+            }
+        
+            .formArea {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                
+                flex: 1;
+                height: 80%;
+                margin: 0 12px;
+
+                form {
+                    height: 70%;
+                }
+
+                footer {
+                    height: 25%;
+                }
+            
+                .box {
+                    padding: 40px;
+
+                    background-color: #F3F3F3;
+                    border-radius: 6px;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    input {
+                        width: 100%;
+                        padding: 15px 15px;
+                        border-radius: 8px;
+                        border: none;
+                        margin: 24px 0;
+                        
+                        outline: none;
+                    }
+
+                    button {
+                        padding: 15px 15px;
+                        border-radius: 8px;
+                        width: 100%;
+                        outline: none;
+                        border: none;
+                        background-color: #ED2590;
+                        color: white;
+                        font-weight: 600;
+
+                        &:hover {
+                            filter: brightness(0.8);
+                        }
+
+                        &:disabled {
+                            background-color: tan;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     img {
         max-width: 100%;
         height: auto;
